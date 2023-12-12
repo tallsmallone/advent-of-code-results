@@ -26,7 +26,6 @@ def log(name, value = None):
 
 def part1():
     userInput = getInput()
-    print(f'{len(userInput)}')
     print(getSumOfPartNumbers_part1(userInput))
 
 def getSumOfPartNumbers_part1(lines):
