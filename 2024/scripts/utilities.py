@@ -15,7 +15,7 @@ import requests
 
 from constants import BASE_URL, YEAR
 
-def get_input():
+def get_input(day: int):
     """
     Retrieves the input for the current day's puzzle using session credentials.
 
@@ -28,7 +28,7 @@ def get_input():
     load_dotenv()
 
     headers = {'Cookie': f"session={os.getenv('AOC_SESSION')}"}
-    result = requests.get(f'{BASE_URL}/{YEAR}/day/1/input', headers=headers, timeout=10)
+    result = requests.get(f'{BASE_URL}/{YEAR}/day/{day}/input', headers=headers, timeout=10)
     body = result.content.decode().splitlines()
     return body
 

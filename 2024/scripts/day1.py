@@ -14,11 +14,11 @@ DELIMITER = '   '
 
 def part1():
     """Run the solution for part 1 of the puzzle."""
-    print(get_sum_of_smallest_in_lists_part_1(get_input()))
+    print(get_sum_of_smallest_in_lists_part_1(get_input(1)))
 
 def part2():
     """Run the solution for part 2 of the puzzle."""
-    print(get_similarity_score_part_2(get_input()))
+    print(get_similarity_score_part_2(get_input(1)))
 
 def get_sum_of_smallest_in_lists_part_1(lines):
     """
