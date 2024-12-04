@@ -1,30 +1,13 @@
-from dotenv import load_dotenv
-import os
-import re
-import requests
 import unittest
 import argparse
 
-from constants import BASE_URL, YEAR
-
 import pdb
+
+from utilities import getInput, log
 
 debugging = True
 
 DELIMITER = '   '
-
-def getInput():
-    headers = {'Cookie': f"session={os.getenv('AOC_SESSION')}"}
-    input = requests.get(f'{BASE_URL}/{YEAR}/day/1/input', headers=headers)
-    userInput = input.content.decode().splitlines()
-    return userInput
-
-def log(name, value = None):
-    if debugging:
-        if value is not None:
-            print(f'{name}: [{value}]')
-        else:
-            print(f'{name}')
 
 def part1():
     userInput = getInput()
@@ -131,8 +114,6 @@ if __name__ == '__main__':
     parser.add_argument('-d', '--debug', action='store_true', help='Enable debug logging')
     parser.add_argument('-2', '--part-2', action='store_true', help='Run part 2 solution')
     args = parser.parse_args()
-
-    load_dotenv()
 
     if args.debug:
         debugging = True
