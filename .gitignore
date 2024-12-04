@@ -2,3 +2,4 @@ inputs
 .env
 __pycache__
 .config
+.vscode
