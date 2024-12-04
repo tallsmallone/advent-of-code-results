@@ -1,24 +1,36 @@
+"""
+Day 1 solution for Advent of Code.
+This module handles processing and comparing lists of numbers.
+"""
+
 import unittest
 import argparse
 
-import pdb
+from utilities import get_input
 
-from utilities import getInput, log
-
-debugging = True
+DEBUGGING = True
 
 DELIMITER = '   '
 
 def part1():
-    userInput = getInput()
-    print(getSumOfSmallestInLists_Part_1(userInput))
+    """Run the solution for part 1 of the puzzle."""
+    print(get_sum_of_smallest_in_lists_part_1(get_input()))
 
 def part2():
-    userInput = getInput()
-    print(getSimilarityScore_Part_2(userInput))
+    """Run the solution for part 2 of the puzzle."""
+    print(get_similarity_score_part_2(get_input()))
 
-def getSumOfSmallestInLists_Part_1(lines):
-    sum = 0
+def get_sum_of_smallest_in_lists_part_1(lines):
+    """
+    Calculate the sum of absolute differences between sorted pairs of numbers.
+
+    Args:
+        lines (list): List of strings, each containing two numbers separated by DELIMITER
+
+    Returns:
+        int: Sum of absolute differences between corresponding sorted numbers
+    """
+    total = 0
     left = list()
     right = list()
 
@@ -30,12 +42,21 @@ def getSumOfSmallestInLists_Part_1(lines):
     left = sorted(left)
     right = sorted(right)
 
-    for i in range(len(left)):
-        sum += abs(left[i] - right[i])
+    for i, left_val in enumerate(left):
+        total += abs(left_val - right[i])
 
-    return sum
+    return total
 
-def getSimilarityScore_Part_2(lines):
+def get_similarity_score_part_2(lines):
+    """
+    Calculate similarity score by summing matching numbers in sorted pairs.
+
+    Args:
+        lines (list): List of strings, each containing two numbers separated by DELIMITER
+
+    Returns:
+        int: Total similarity score based on matching numbers
+    """
     total = 0
     left = list()
     right = list()
@@ -50,29 +71,35 @@ def getSimilarityScore_Part_2(lines):
     left = sorted(left)
     right = sorted(right)
 
-    for i in range(len(left)):
-        if left[i] not in amount:
+    for _, left_val in enumerate(left):
+        if left_val not in amount:
             temp_total = 0
-            for j in range(len(right)):
-                if left[i] == right[j]:
-                    temp_total += right[j]
-            amount[left[i]] = temp_total
+            for _, right_val in enumerate(right):
+                if left_val == right_val:
+                    temp_total += right_val
+            amount[left_val] = temp_total
 
-        total += amount[left[i]]
+        total += amount[left_val]
 
     return total
 
 class TestMatchingFunctions(unittest.TestCase):
-    def test_part1_oneLine(self):
-        self.assertEqual(2, getSumOfSmallestInLists_Part_1(['1   3']))
+    """Test cases for the matching functions in Day 1 solution."""
 
-    def test_part1_twoLins(self):
-        self.assertEqual(4, getSumOfSmallestInLists_Part_1(['1   3', '2   4']))
+    def test_part_1_one_line(self):
+        """Test part 1 with a single line input."""
+        self.assertEqual(2, get_sum_of_smallest_in_lists_part_1(['1   3']))
 
-    def test_part1_twoLines_unsorted(self):
-        self.assertEqual(4, getSumOfSmallestInLists_Part_1(['2   4', '1   3']))
+    def test_part_1_two_lines(self):
+        """Test part 1 with two lines input."""
+        self.assertEqual(4, get_sum_of_smallest_in_lists_part_1(['1   3', '2   4']))
 
-    def test_part1_example(self):
+    def test_part_1_two_lines_unsorted(self):
+        """Test part 1 with two unsorted lines input."""
+        self.assertEqual(4, get_sum_of_smallest_in_lists_part_1(['2   4', '1   3']))
+
+    def test_part_1_example(self):
+        """Test part 1 with the complete example input set from the problem."""
         example = [
         '3   4',
         '4   3',
@@ -82,21 +109,26 @@ class TestMatchingFunctions(unittest.TestCase):
         '3   3'
         ]
 
-        self.assertEqual(11, getSumOfSmallestInLists_Part_1(example))
+        self.assertEqual(11, get_sum_of_smallest_in_lists_part_1(example))
 
-    def test_part2_oneLine(self):
-        self.assertEqual(0, getSimilarityScore_Part_2(['1   3']))
+    def test_part_2_one_line(self):
+        """Test part 2 with a single line input."""
+        self.assertEqual(0, get_similarity_score_part_2(['1   3']))
 
-    def test_part2_oneLine_match(self):
-        self.assertEqual(1, getSimilarityScore_Part_2(['1   1']))
+    def test_part_2_one_line_match(self):
+        """Test part 2 with a single line matching input."""
+        self.assertEqual(1, get_similarity_score_part_2(['1   1']))
 
-    def test_part2_twoLines(self):
-        self.assertEqual(0, getSimilarityScore_Part_2(['1   3', '2   4']))
+    def test_part_2_two_lines(self):
+        """Test part 2 with two lines input."""
+        self.assertEqual(0, get_similarity_score_part_2(['1   3', '2   4']))
 
-    def test_part2_twoLines_match(self):
-        self.assertEqual(3, getSimilarityScore_Part_2(['1   1', '2   2']))
+    def test_part_2_two_lines_match(self):
+        """Test part 2 with two lines matching input."""
+        self.assertEqual(3, get_similarity_score_part_2(['1   1', '2   2']))
 
-    def test_part2_example(self):
+    def test_part_2_example(self):
+        """Test part 2 with the complete example input set from the problem."""
         example = [
         '3   4',
         '4   3',
@@ -106,7 +138,7 @@ class TestMatchingFunctions(unittest.TestCase):
         '3   3'
         ]
 
-        self.assertEqual(31, getSimilarityScore_Part_2(example))
+        self.assertEqual(31, get_similarity_score_part_2(example))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Advent of Code Day 1 Solution')
@@ -116,7 +148,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if args.debug:
-        debugging = True
+        DEBUGGING = True
 
     if args.unit_test:
         unittest.main(argv=['first-arg-is-ignored'], exit=False)
