@@ -8,7 +8,7 @@ import argparse
 
 from utilities import get_input, log
 
-DEBUGGING = True
+DEBUGGING = False
 
 DELIMITER = ' '
 MIN_DIFFERENCE = 1
@@ -76,7 +76,7 @@ def get_number_of_safe_reports(lines: list):
                 good_line = False
 
         if good_line:
-            log('good line', line)
+            log('good line', line, DEBUGGING)
             total += 1
 
     return total
@@ -85,21 +85,21 @@ def get_number_of_safe_reports(lines: list):
 class TestMatchingFunctions(unittest.TestCase):
     """Test cases for the matching functions in Day 2 solution."""
 
-    # def test_part_1_one_line(self):
-    #     """Test part 1 with a single line input."""
-    #     self.assertEqual(1, get_number_of_safe_reports(['1 2 3 4 5']))
+    def test_part_1_one_line(self):
+        """Test part 1 with a single line input."""
+        self.assertEqual(1, get_number_of_safe_reports(['1 2 3 4 5']))
 
-    # def test_part_1_two_lines(self):
-    #     """Test part 1 with two lines input."""
-    #     self.assertEqual(2, get_number_of_safe_reports(['1 2 3 4 5', '2 3 4 5 6']))
+    def test_part_1_two_lines(self):
+        """Test part 1 with two lines input."""
+        self.assertEqual(2, get_number_of_safe_reports(['1 2 3 4 5', '2 3 4 5 6']))
 
-    # def test_part_1_one_line_unsafe(self):
-    #     """Test part 1 with a single unsafe line input."""
-    #     self.assertEqual(0, get_number_of_safe_reports(['1 2 3 1 5']))
+    def test_part_1_one_line_unsafe(self):
+        """Test part 1 with a single unsafe line input."""
+        self.assertEqual(0, get_number_of_safe_reports(['1 2 3 1 5']))
 
-    # def test_part_1_two_lines_unsafe(self):
-    #     """Test part 1 with two unsafe lines input."""
-    #     self.assertEqual(0, get_number_of_safe_reports(['1 2 3 1 5', '2 3 4 1 6']))
+    def test_part_1_two_lines_unsafe(self):
+        """Test part 1 with two unsafe lines input."""
+        self.assertEqual(0, get_number_of_safe_reports(['1 2 3 1 5', '2 3 4 1 6']))
 
     def test_part_1_example(self):
         """Test part 1 with the complete example input set from the problem."""
